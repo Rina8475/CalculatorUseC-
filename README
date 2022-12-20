@@ -1,0 +1,29 @@
+*****************************
+ calculator 程序 README 文件
+*****************************
+Author: Rina
+Date:   2022/11/23
+
+此文件包括对项目文件结构的说明和项目编译的说明
+P.S. 此项目的文件目录下未包括测试文件
+
+************
+0. 文件结构 
+************
+buildin.cpp         - 实现 buildin 函数
+tokens.cpp          - 实现词法分析 将输入的字符串流转换为 token 流
+parse.cpp           - 实现语法分析 将输入的 token 流转换为语法树
+table.cpp           - 实现 Symbol table
+calculate.cpp       - 实现函数类 并对接收到的语法树进行计算并打印
+
+************
+1. 文件编译
+************
+如果你的计算机上有 make 程序，直接在当前目录下执行 make 命令即可
+    PS > make
+
+如果没有 make 程序，则执行下面的命令
+    PS > g++ -Og -Wall -o calculator buildin.cpp calculate.cpp parse.cpp table.cpp tokens.cpp
+
+上面的命令生成可执行文件 calculator.exe，输入下面的命令执行程序
+    PS > ./calculator.exe
