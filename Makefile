@@ -4,12 +4,24 @@
 CC = g++
 CFLAGS = -Og -Wall
 
-all: buildin.cpp calculate.cpp parse.cpp table.cpp tokens.cpp
-	$(CC) $(CFLAGS) -o calculator buildin.cpp calculate.cpp parse.cpp table.cpp tokens.cpp
+ODIR = target
+OBJS = $(patsubst %.cpp, %.o, $(wildcard *.cpp))
+COBJS = $(filter-out test.o, $(OBJS))
+_OBJS = $(patsubst %.o, $(ODIR)/%.o, $(COBJS))
 
-test: table.cpp test.cpp buildin.cpp
-	$(CC) $(CFLAGS) -o test table.cpp buildin.cpp test.cpp calculate.cpp parse.cpp tokens.cpp
+calculator: $(_OBJS)
+	$(CC) $(CFLAGS) $^ -o $@
+
+$(_OBJS): $(ODIR)/%.o: %.cpp
+	$(CC) $(CFLAGS) -c $< -o $@
+
+test: $(_OBJS) $(ODIR)/test.o
+	$(CC) $(CFLAGS) $^ -o $@
+
+$(ODIR)/test.o: test.cpp
+	$(CC) $(CFLAGS) -c $< -o $@
+
 clean:
-	rm -f *.o calculator
+	rm -f $(ODIR)/*.o calculator test
 
 
